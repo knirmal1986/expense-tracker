@@ -1,0 +1,17 @@
+.container-fluid{
+    background-color: #0288D1;
+    padding: 1.5vh;
+    color:white; 
+    text-emphasis: green;
+    font-size: 4vh;
+}
+
+
+.btn{
+    background-color: #0288D1;
+    color:white;
+    
+}
+.btn:hover {
+    background-color: #0182C8;
+  }
