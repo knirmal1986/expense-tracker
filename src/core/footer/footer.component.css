@@ -1,0 +1,17 @@
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background-color: #0288D1;
+    color: white;
+    height: 12vh;
+  }
+
+  .contactingLinks{
+    float: right;
+  }
+  
+.linksIcons{
+    padding: 2vh;
+    color:white;
+}
