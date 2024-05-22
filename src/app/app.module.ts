@@ -11,6 +11,7 @@ import { alarm, alarmFill, alignBottom,list,linkedin } from 'ngx-bootstrap-icons
 import { HttpClientModule } from '@angular/common/http';
 import { LoginModule } from './login/login.module';
 import { SignUpModule } from './sign-up/sign-up.module';
+import { SharedModule } from './shared/shared.module';
 
 
 const icons = {
@@ -35,11 +36,11 @@ const icons = {
     CommonModule,
     AppRoutingModule,
     HttpClientModule,
-    NgbModule,   
+    NgbModule,
     LoginModule,
     SignUpModule,
-    NgxBootstrapIconsModule.pick(icons),  
-    
+    // SharedModule,
+    NgxBootstrapIconsModule.pick(icons),
   ],
   providers: [],
   bootstrap: [AppComponent]

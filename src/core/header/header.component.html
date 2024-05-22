@@ -1,25 +1,23 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
   
     <div class="container-fluid">
-      <a><i-bs name="list"></i-bs>  Expense tracker </a>
+      <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#demo">
+        <i-bs name="list"></i-bs>
+      </button> 
+      <a>  Expense tracker </a>
       <button class="btn" type="button">{{navbarText}}</button>
     </div>
     
   </nav>
-   <!-- Offcanvas Sidebar -->
+
    <div class="offcanvas offcanvas-start" id="demo">
     <div class="offcanvas-header">
-      <h1 class="offcanvas-title">Heading</h1>
-      <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"></button>
+      <h1 class="offcanvas-title">Expense Tracker</h1>
     </div>
     <div class="offcanvas-body">
-      <p>Some text lorem ipsum.</p>
-      <p>Some text lorem ipsum.</p>
-      <button class="btn btn-secondary" type="button">A Button</button>
+      
+      <a href="home"><p>Home</p></a>
+      <a href="dashboard"><p>View Expenses</p></a>
+      <a><p>Logout</p></a>
     </div>
   </div>
-  
-  <!-- Button to open the offcanvas sidebar -->
-  <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#demo">
-    Open Offcanvas Sidebar
-  </button> 
