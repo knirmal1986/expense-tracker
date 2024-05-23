@@ -1,7 +1,8 @@
 import { NgModule,CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HomeComponent } from './home/home.component';
-import { SharedModule } from '../shared/shared.module';
+import { SharedModule } from '../shared/shared.module'
+
 
 // const icons = {
 //   alarm,
@@ -19,7 +20,7 @@ import { SharedModule } from '../shared/shared.module';
   ],
   imports: [
     CommonModule,
-    SharedModule,
+    SharedModule
   ],
   exports:[
     SharedModule
