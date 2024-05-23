@@ -1,1 +1,48 @@
 <p>dashboard works!</p>
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <div class="card" style="width: 18rem;">
+                <div class="card-body text-center">
+                  <h3 class="card-title">May 7 2024</h3>
+                  <h6 class="card-subtitle mb-2 text-body-secondary">first expense date</h6>
+                </div>
+              </div>
+        </div>
+        <div class="col"><div class="card" style="width: 18rem;">
+            <div class="card-body text-center">
+                <h3 class="card-title">May 22 2024</h3>
+                <h6 class="card-subtitle mb-2 text-body-secondary">Last expense date</h6>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+            <div class="card" style="width: 18rem;">
+            <div class="card-body text-center">
+                <h3 class="card-title">3</h3>
+                <h6 class="card-subtitle mb-2 text-body-secondary">Number of expenses</h6>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+            <div class="card" style="width: 18rem;">
+                <div class="card-body text-center">
+                    <h3 class="card-title">350</h3>
+                    <h6 class="card-subtitle mb-2 text-body-secondary">Total Amount</h6>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <ag-charts-angular
+                style="height: 100%"
+                [options]="chartOptions">
+            </ag-charts-angular>
+        </div>
+        <div class="col">
+
+        </div>
+    </div>
+</div>

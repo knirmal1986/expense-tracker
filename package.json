@@ -22,10 +22,11 @@
     "@angular/router": "^16.2.0",
     "@ng-bootstrap/ng-bootstrap": "^15.1.2",
     "@popperjs/core": "^2.11.6",
-    "bootstrap": "^5.3.3",
-    "ngx-bootstrap-icons": "^1.9.3",
+    "ag-charts-angular": "^9.3.1",
     "ag-charts-community": "^9.3.1",
+    "bootstrap": "^5.3.3",
     "json-server": "^1.0.0-beta.0",
+    "ngx-bootstrap-icons": "^1.9.3",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.13.0"
