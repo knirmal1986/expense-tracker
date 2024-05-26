@@ -5,6 +5,8 @@
         <i-bs name="list"></i-bs>
       </button> 
       <a>  Expense tracker </a>
+      <i i-bs name="person-circle">
+</i>
       <button class="btn" type="button">{{navbarText}}</button>
     </div>
     
@@ -13,11 +15,15 @@
    <div class="offcanvas offcanvas-start" id="demo">
     <div class="offcanvas-header">
       <h1 class="offcanvas-title">Expense Tracker</h1>
+      <i-bs name="person-circle"
+width="75"
+  height="75">
+</i-bs>
     </div>
     <div class="offcanvas-body">
       
-      <a href="home"><p>Home</p></a>
-      <a href="dashboard"><p>View Expenses</p></a>
+      <a [routerLink]="['home']"><p>Home</p></a>
+      <a routerLink="dashboard"><p>View Expenses</p></a>
       <a><p>Logout</p></a>
     </div>
   </div>
