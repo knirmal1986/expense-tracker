@@ -5,9 +5,14 @@
         <i-bs name="list"></i-bs>
       </button> 
       <a>  Expense tracker </a>
-      <button class="btn" type="button">{{navbarText}}</button>
+
+      <div *ngIf="isLoggedIn; else elseBlock">
+        <button class="btn" type="button" (click)="logOut()">Logout</button>
+      </div>
+      <ng-template #elseBlock>
+        <button class="btn" type="button" (click) ="login()">Login</button>
+      </ng-template>
     </div>
-    
   </nav>
 
    <div class="offcanvas offcanvas-start" id="demo">
@@ -18,6 +23,11 @@
       
       <a href="home"><p>Home</p></a>
       <a href="dashboard"><p>View Expenses</p></a>
-      <a><p>Logout</p></a>
+      <span *ngIf="isLoggedIn; else elseBlock">
+        <button class="btn" type="button" (click)="logOut()">Logout</button>
+      </span>
+      <ng-template #elseBlock>
+        <button class="btn" type="button" (click) ="login()">Login</button>
+      </ng-template>
     </div>
   </div>

@@ -12,11 +12,12 @@ export class AppComponent {
   title = 'ExpenseTracker';
 
   constructor(private afAuth: AngularFireAuth){}
-  signInWithGoogle(){
-   this.afAuth.signInWithPopup(new GoogleAuthProvider()).then((result) => {
-   alert('You have been successfully logged in!');
-  }).catch((error) => {
-      alert(error)
-  })
-  }
+  
+  // signInWithGoogle(){
+  //  this.afAuth.signInWithPopup(new GoogleAuthProvider()).then((result) => {
+  //  alert('You have been successfully logged in!');
+  // }).catch((error) => {
+  //     alert(error)
+  // })
+  // }
 }
