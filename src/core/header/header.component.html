@@ -5,12 +5,9 @@
         <i-bs name="list"></i-bs>
       </button> 
       <a>  Expense tracker </a>
-      <i i-bs name="person-circle">
-</i>
-      <button class="btn" type="button">{{navbarText}}</button>
-      <div *ngIf="isLoggedIn; else elseBlock">
+      <span *ngIf="isLoggedIn; else elseBlock">
         <button class="btn" type="button" (click)="logOut()">Logout</button>
-      </div>
+      </span>
       <ng-template #elseBlock>
         <button class="btn" type="button" (click) ="login()">Login</button>
       </ng-template>
@@ -28,9 +25,6 @@ width="75"
     <div class="offcanvas-body">
       <a [routerLink]="['home']"><p>Home</p></a>
       <a routerLink="dashboard"><p>View Expenses</p></a>
-      <a><p>Logout</p></a>
-      <a href="home"><p>Home</p></a>
-      <a href="dashboard"><p>View Expenses</p></a>
       <span *ngIf="isLoggedIn; else elseBlock">
         <button class="btn" type="button" (click)="logOut()">Logout</button>
       </span>

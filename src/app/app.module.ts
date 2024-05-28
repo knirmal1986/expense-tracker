@@ -18,16 +18,6 @@ import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { initializeApp } from 'firebase/app';
 
-// Your web app's Firebase configuration
-// const firebaseConfig = {
-//   apiKey: "AIzaSyCu-ENtKyuFDfKeDPfKwDNqcQgpvL233bE",
-//   authDomain: "expense-tracker-bf63f.firebaseapp.com",
-//   projectId: "expense-tracker-bf63f",
-//   storageBucket: "expense-tracker-bf63f.appspot.com",
-//   messagingSenderId: "906585800422",
-//   appId: "1:906585800422:web:c725e6016e7fb83c23c527"
-// };
-
 const firebaseConfig = {
   apiKey: "AIzaSyDvPFvPb2jeTOXqow6ToTGgdbfzR1wtYng",
   authDomain: "expensetracker-9feec.firebaseapp.com",
@@ -68,8 +58,7 @@ const icons = {
       width: '2em', 
       height: '2em', 
       theme: ColorTheme.Info,
-  })
-    NgbModule,   
+  }),
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFirestoreModule,
     AngularFireAuthModule

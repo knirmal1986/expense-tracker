@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { LoginService,User } from 'src/services/login.service';
 import { AuthFirebaseService } from 'src/services/auth-firebase.service';
 import { Router } from '@angular/router';
+import { DatabaseService } from 'src/services/database.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -14,15 +15,18 @@ firstName:string = ""
 lastName:string = ""
 emailID:string=""
 password:string=""
-user:User ={} as any
+user1:User ={} as any
 userDetails:any
+userDB:any
 
 private loginService :LoginService;
 private authService: AuthFirebaseService;
+private databaseService: DatabaseService;
 
   constructor(private router:Router){
     this.loginService= inject(LoginService)
     this.authService = inject(AuthFirebaseService)
+    this.databaseService = inject(DatabaseService)
   }
   ngOnInit(): void {
     if(this.authService.checkIfLoggedIn()){
@@ -34,8 +38,17 @@ private authService: AuthFirebaseService;
   signUpWithEmailAndPassword(singupForm:NgForm){
     this.emailID  =singupForm.value.emailID
     this.password = singupForm.value.password
+    this.firstName =  singupForm.value.firstName
+    this.lastName = singupForm.value.lastName
     this.authService.signUp(this.emailID,this.password).then((result)=>{
       this.userDetails = result.user
+      let userDB = {
+        UID:this.userDetails.uid,
+        firstName:this.firstName,
+        lastName:this.lastName,
+        emailID:this.emailID
+      }
+      this.databaseService.newUserToFirestore(userDB)
       alert("You have been successfully registered")
       window.localStorage.setItem("username", this.userDetails.uid); 
       this.router.navigate(['/home']);
@@ -51,7 +64,7 @@ private authService: AuthFirebaseService;
       emailID: singupForm.value.emailID,
       password:singupForm.value.password
     }
-
+    
     this.loginService.newUserSignUp(newUser).subscribe(
       (data:any)=>{
         console.log(data)
