@@ -17,7 +17,6 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { initializeApp } from 'firebase/app';
-import { TestingComponent } from './testing/testing.component';
 
 const firebaseConfig = {
   apiKey: "AIzaSyDvPFvPb2jeTOXqow6ToTGgdbfzR1wtYng",
@@ -42,8 +41,7 @@ const icons = {
   declarations: [
     AppComponent,
     HeaderComponent,
-    FooterComponent,
-    TestingComponent
+    FooterComponent
   ],
   imports: [
     BrowserModule,
