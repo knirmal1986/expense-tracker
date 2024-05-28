@@ -7,5 +7,20 @@
       <label for="exampleInputPassword1" class="form-label">Password</label>
       <input type="password" name="password" class="form-control" id="exampleInputPassword1" ngModel>
     </div>
-    <button (click)="emailLogin(userForm)" class="btn btn-primary">Log in</button>
+
+    <div class="container text-center">
+      <div class="row">
+        <div class="col">
+          <button (click)="loginWithEmailAndPassword(userForm)" class="btn btn-primary">Log In with Email and password</button>
+        </div>
+        <div class="col">
+          <button (click)="signUpWithEmailAndPassword(userForm)" class="btn btn-primary">SignUp with email ID</button>
+        </div>
+        <div class="col">
+          <button (click)="googleLogin()" class="btn btn-primary">Sign in with google</button> 
+        </div>
+      </div>
+    </div>
+    <!-- <button (click)="emailLogin(userForm)" class="btn btn-primary">Log in</button> -->
+    <!-- <button (click)="logOut()" class="btn btn-primary">Log out</button> -->
   </form>
