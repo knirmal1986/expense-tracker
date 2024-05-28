@@ -10,8 +10,7 @@ import { AuthFirebaseService } from 'src/services/auth-firebase.service';
 })
 export class HeaderComponent implements OnInit{
   isLoggedIn :boolean = false
-  navbarText = "Log in"
-
+  
   private authService: AuthFirebaseService
   
   constructor(private router:Router ){

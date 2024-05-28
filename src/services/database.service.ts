@@ -19,17 +19,9 @@ export class DatabaseService {
   constructor( private db:AngularFirestore) { 
     this.usersRef=db.collection(this.dbPath)  
     }
-
-    uploadDocumentToFirestore(){
-      this.usersRef.add({...this.user}).then(() =>{
-        console.log("added successfully")
-      }).catch((error) =>{
-        console.log(error)
-      })
-    }
-
-    newUserToFirestore(){
-      this.usersRef.add({...this.user}).then(() =>{
+    
+    newUserToFirestore(user:any){
+      this.usersRef.add({...user}).then(() =>{
         console.log("added successfully")
       }).catch((error) =>{
         console.log(error)
