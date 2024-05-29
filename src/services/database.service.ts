@@ -7,24 +7,22 @@ import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument 
 export class DatabaseService {
 
  private dbPath = '/users';
- user= {
-    "id": "f87f",
-    "firstName": "something",
-    "lastName": "lol",
-    "emailID": "something@example.com",
-    "password": "something"
-  }
   usersRef :AngularFirestoreCollection<any>
 
   constructor( private db:AngularFirestore) { 
-    this.usersRef=db.collection(this.dbPath)  
+    this.usersRef=db.collection(this.dbPath)
+    console.log("this is from database service"+this.usersRef)
     }
-    
+
     newUserToFirestore(user:any){
       this.usersRef.add({...user}).then(() =>{
         console.log("added successfully")
       }).catch((error) =>{
         console.log(error)
       })
+    }
+
+    getAll(): AngularFirestoreCollection<any> {
+      return this.usersRef;
     }
 }
