@@ -6,10 +6,14 @@
             <div class="row">
                 <h3 class="card-title">User Info</h3>
             </div>
+            <div *ngIf="!loggedInUserDetails; else elseBlock" class="spinner-border text-info" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+            <ng-template #elseBlock>
             <div class="row text-center">
                 <i i-bs name="person-circle" width="2rem" 
                 height="2rem"></i>
-                <p class="card-text">Lakshmi reddy</p>
+                <p class="card-text">{{loggedInUserDetails.firstName}}  {{loggedInUserDetails.lastName}}</p>
             </div>
             <div class="row text-center">
                 <div class="col">
@@ -25,6 +29,7 @@
                     <p class="card-text">May 22,2024</p>
                   </div>
             </div>
+          </ng-template>
         </div>
       </div>
     </div>
@@ -38,30 +43,32 @@
             <h3 class="card-title">Expense categories</h3>
           </div>
           <div class="row">
-            <p class="card-sub-title">Add/ remove expense categories</p>
+            <p class="card-sub-title">Add / remove expense categories</p>
           </div>
           <div class="row">
-            <p>Add Category</p>
+            <p>Add/ Remove Category</p>
           </div>
+          <div *ngIf="!loggedInUserDetails; else elseBlock1" class="spinner-border text-info" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+          <ng-template #elseBlock1>
           <div class="row">
             <p class="card-title">
-              <button type="button" class="btn btn-light">Groceries</button>
-              <button type="button" class="btn btn-light">Entertainment</button>
-              <button type="button" class="btn btn-light">Transportation</button>
-              <button type="button" class="btn btn-light">Dining out</button>
-              <button type="button" class="btn btn-light">Unassigned</button>
+              <span *ngFor="let category of loggedInUserDetails.categories let i = index">
+                <button type="button" class="btn btn-light">{{category}}</button>
+              </span>
             </p>
           </div>
+          </ng-template>
           <div class="row">
             <div class="input-group mb-3">
-              <input type="text" class="form-control" placeholder="Category">
+              <input type="text" class="form-control" name="category" [(ngModel)]="category" placeholder="Category">
             </div>
-            
           </div>
           <div class="row text-end">
             <p>
-              <button type="button" class="btn btn-outline-info">Reset</button>
-              <button type="button" class="btn btn-outline-info">Save</button>
+              <button type="button" class="btn btn-outline-info" (click)="addNewCategory()">Add</button>
+              <button type="button" class="btn btn-outline-danger">Remove</button>
             </p>
           </div>
         </div>

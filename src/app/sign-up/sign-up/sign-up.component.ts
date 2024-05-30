@@ -1,6 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { LoginService,User } from 'src/services/login.service';
+import { LoginJsonService,User } from 'src/services/login-json.service';
 import { AuthFirebaseService } from 'src/services/auth-firebase.service';
 import { Router } from '@angular/router';
 import { DatabaseService } from 'src/services/database.service';
@@ -18,13 +18,14 @@ password:string=""
 user1:User ={} as any
 userDetails:any
 userDB:any
+categories = ["Groceries","Transportation","Entertainment","Dining out","Unassigned"]
 
-private loginService :LoginService;
+private loginJsonService :LoginJsonService;
 private authService: AuthFirebaseService;
 private databaseService: DatabaseService;
 
   constructor(private router:Router){
-    this.loginService= inject(LoginService)
+    this.loginJsonService= inject(LoginJsonService)
     this.authService = inject(AuthFirebaseService)
     this.databaseService = inject(DatabaseService)
   }
@@ -46,7 +47,8 @@ private databaseService: DatabaseService;
         UID:this.userDetails.uid,
         firstName:this.firstName,
         lastName:this.lastName,
-        emailID:this.emailID
+        emailID:this.emailID,
+        categories:this.categories
       }
       this.databaseService.newUserToFirestore(userDB)
       alert("You have been successfully registered")
@@ -65,7 +67,7 @@ private databaseService: DatabaseService;
       password:singupForm.value.password
     }
     
-    this.loginService.newUserSignUp(newUser).subscribe(
+    this.loginJsonService.newUserSignUp(newUser).subscribe(
       (data:any)=>{
         console.log(data)
         console.log("User signed up successfully")
