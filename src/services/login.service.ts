@@ -1,29 +1,32 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient,HttpParams } from '@angular/common/http';
+import { time } from 'ag-charts-community';
 
 export  interface User{
   firstName:string,
   lastName:string,
   emailID:string,
-  password:string
+  UID:string,
+  createdDate:any,
+  lastLogin:any
 }
+
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class LoginService {
-  private url ="http://localhost:3000/users"
-  constructor(private http:HttpClient) {   }
+  private currentUser: User ={} as any;
+  // private userId: string;
+  // private categories: string[];
+  // private userIdSet = new Subject<string>();
 
-  public  newUserSignUp(newUser:User):Observable<Object>{
-    return this.http.post(this.url,newUser)
-  }
+  constructor() { }
 
-  public checkLogin(email:string):Observable<Object>{
-    return this.http.get(this.url, {
-      params: {
-        emailID: email
-      }})
+  setUser(data:User){
+    this.currentUser = data
+    console.log(this.currentUser)
   }
 }

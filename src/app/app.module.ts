@@ -16,6 +16,7 @@ import { SharedModule } from './shared/shared.module';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+import { getFirestore } from 'firebase/firestore';
 import { initializeApp } from 'firebase/app';
 
 const firebaseConfig = {
@@ -26,6 +27,8 @@ const firebaseConfig = {
   messagingSenderId: "918664489535",
   appId: "1:918664489535:web:c20b48f0faecbb45f1668a"
 };
+
+
 
 const icons = {
   alarm,

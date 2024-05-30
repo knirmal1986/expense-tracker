@@ -11,7 +11,9 @@ import { DatabaseService } from 'src/services/database.service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit{
+  loadingUserInformation:boolean= true
   loggedInUserDetails:any
+  category:string =""
   private authService:AuthFirebaseService
   private dbService:DatabaseService
   constructor(private router:Router){
@@ -31,10 +33,22 @@ export class HomeComponent implements OnInit{
           )
         )
       ).subscribe(data =>{
-        this.loggedInUserDetails = data.filter(function (record){
+        this.loggedInUserDetails = data.filter(function (record:any){
           return record.UID == window.localStorage.getItem("username")
         })
+        this.loggedInUserDetails = this.loggedInUserDetails[0]
+        console.log(this.loggedInUserDetails)
       })
     }
 }
+
+
+addNewCategory(){
+  // this.dbService.saveNewCategory(this.category)
+}
+
+displayAllCategories(){
+  
+}
+
 }
