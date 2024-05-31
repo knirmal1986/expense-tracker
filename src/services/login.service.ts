@@ -12,21 +12,33 @@ export  interface User{
   lastLogin:any
 }
 
-
 @Injectable({
   providedIn: 'root'
 })
 
 export class LoginService {
   private currentUser: User ={} as any;
-  // private userId: string;
-  // private categories: string[];
-  // private userIdSet = new Subject<string>();
 
   constructor() { }
 
   setUser(data:User){
     this.currentUser = data
-    console.log(this.currentUser)
+    // console.log(this.currentUser)
+  }
+
+  checkIfLoggedIn(){
+    // console.log("check if loggedin"+ this.currentUser)
+    if(this.currentUser.UID) {
+      console.log("you have logged in")
+       return true
+    }
+    else{
+      console.log("Please login")
+      return false
+    }
+  }
+
+  logOut(){
+    this.currentUser = {} as any
   }
 }
