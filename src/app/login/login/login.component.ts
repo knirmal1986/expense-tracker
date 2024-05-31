@@ -5,7 +5,7 @@ import { LoginService } from 'src/services/login.service';
 import { AuthFirebaseService } from 'src/services/auth-firebase.service';
 import { Router } from '@angular/router';
 import { DatabaseService } from 'src/services/database.service';
-import { map } from 'rxjs';
+import { Firestore,deleteDoc,collectionData,collection } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-login',
@@ -20,13 +20,14 @@ export class LoginComponent implements OnInit {
   password:string = ""
   userDetailsFromAuth:any
   setUser:any
-
+  
+ 
   private loginServiceJson:  LoginJsonService;
   private authService: AuthFirebaseService;
   private loginService:LoginService
   private databaseService:DatabaseService
 
-     constructor(private router:Router){ 
+  constructor(private router:Router){ 
     this.loginServiceJson = inject(LoginJsonService)
     this.authService = inject(AuthFirebaseService)
     this.loginService = inject(LoginService)
@@ -34,14 +35,14 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if(this.authService.checkIfLoggedIn()){
+    if(this.loginService.checkIfLoggedIn()){
       this.router.navigate(['/home']);
       alert("You are already loggedin.")
     }
   }
 
   emailLogin(userForm:NgForm){
-    console.log(userForm.value)
+    // console.log(userForm.value)
     this.emailID  =userForm.value.email
     this.password = userForm.value.password
     console.log("Email ID: " +this.emailID+"and password :" + this.password)
@@ -73,32 +74,20 @@ export class LoginComponent implements OnInit {
     this.emailID  =userForm.value.email
     this.password = userForm.value.password
     this.authService.logIn(this.emailID,this.password).then(async (result: any) =>{
-      console.log(result.user.multiFactor.user.email)
-      console.log(result.user.multiFactor.user.metadata)
-      //this.userDetailsFromAuth = result.user
-      //this.userDetailsFromAuth = result[0]
       const  {createdAt , lastLoginAt} = result.user.multiFactor.user.metadata
-      console.log(createdAt)
-      console.log(lastLoginAt)
-      // this.databaseService.getUserDetailsById(this.userDetailsFromAuth.uid).subscribe((data1:any) =>{
-      //   console.log(data1)
-      // })
-
+      this.databaseService.getUserDetailsById(result.user.multiFactor.user.uid)
       this.setUser = {
         emailID : result.user.multiFactor.user.email,
-        uid:result.user.multiFactor.user.uid,
+        UID:result.user.multiFactor.user.uid,
         crearedAt: createdAt,
         lastLogin: lastLoginAt,
         firstName:"somehting",
         lastName:"something"
     }
+    this.loginService.setUser(this.setUser)
     console.log(this.setUser)
-      window.localStorage.setItem("username", this.setUser.uid); 
+      window.localStorage.setItem("username", this.setUser.uid);    
       alert("you have been successfully logged in")
-      this.databaseService.getUserDetailsById(this.setUser.uid).get().subscribe((res) =>{
-        console.log(res)
-      })
-      this.loginService.setUser(this.setUser)
       this.router.navigate(['/home']);
     }).catch((error)=>{
       alert(error)
@@ -113,14 +102,7 @@ export class LoginComponent implements OnInit {
   }
 
   logOut(){
-    this.authService.signOut().then((data) =>{
-      console.log(data)
-      window.localStorage.removeItem("username"); 
-      alert("Logged out successfully")
-      this.router.navigate(['/login'])
-    }).catch((error) =>{
-      alert(error)
-    })
+    this.setUser = {}
   }
 }
 

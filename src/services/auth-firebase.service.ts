@@ -27,6 +27,7 @@ userDetails= {} as any
 
   signOut():Promise<void>{
     return this.afAuth.signOut()
+   
   }
 
 

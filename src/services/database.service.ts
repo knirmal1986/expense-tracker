@@ -1,8 +1,7 @@
 import { Injectable,inject } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable,map } from 'rxjs';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
-import {getFirestore,doc,setDoc} from 'firebase/firestore'
-
+import { getFirestore,doc,setDoc} from 'firebase/firestore'
 import { Firestore, collection, collectionData } from '@angular/fire/firestore';
 
 @Injectable({
@@ -11,6 +10,7 @@ import { Firestore, collection, collectionData } from '@angular/fire/firestore';
 export class DatabaseService {
 
  private dbPath = '/users';
+ private collectionName = "users"
  afs:AngularFirestore
   usersRef :AngularFirestoreCollection<any>
   constructor( private db:AngularFirestore) { 
@@ -26,38 +26,13 @@ export class DatabaseService {
       })
     }
 
-    getAll(): AngularFirestoreCollection<any> {
-      return this.usersRef;
-    }
-
     getUserDetailsById(uid:string){
       console.log("uid==", uid)
-        return this.afs.collection('users').doc(uid)
+        this.afs.collection(this.collectionName, ref => ref.where('UID', '==', uid))
+        .get().subscribe((res) =>{
+          console.log(res.docs)
+        });
+        
     }
-
-    
-    getAllCategories(){
-      // return this.categoryRef
-    }
- 
- 
-    // updatePublished(status: boolean): void {
-    //   if (this.currentTutorial.id) {
-    //     this.tutorialService.update(this.currentTutorial.id, { published: status })
-    //     .then(() => {
-    //       this.currentTutorial.published = status;
-    //       this.message = 'The status was updated successfully!';
-    //     })
-    //     .catch(err => console.log(err));
-    //   }
-    // }
-
-    async saveNewCategory(category:string): Promise<any> {
-    //   return this.categoryRef.add(category).then(() =>{
-    //     console.log("Category added successfully");
-    // }).catch((error) =>{
-    //   console.log(error)
-    // })
-  }
 
 }
