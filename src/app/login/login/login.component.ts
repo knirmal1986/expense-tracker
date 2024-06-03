@@ -70,23 +70,19 @@ export class LoginComponent implements OnInit {
     // this.authService.signUp(this.emailID,this.password)
   }
 
-  async loginWithEmailAndPassword(userForm:NgForm){
+  loginWithEmailAndPassword(userForm:NgForm){
     this.emailID  =userForm.value.email
     this.password = userForm.value.password
     this.authService.logIn(this.emailID,this.password).then(async (result: any) =>{
       const  {createdAt , lastLoginAt} = result.user.multiFactor.user.metadata
-      this.databaseService.getUserDetailsById(result.user.multiFactor.user.uid)
-      this.setUser = {
-        emailID : result.user.multiFactor.user.email,
-        UID:result.user.multiFactor.user.uid,
-        crearedAt: createdAt,
-        lastLogin: lastLoginAt,
-        firstName:"somehting",
-        lastName:"something"
-    }
+      this.setUser = this.databaseService.getUserDetailsById(result.user.multiFactor.user.uid)
+      this.setUser.crearedAt = createdAt
+      this.setUser.lastLogin = lastLoginAt
     this.loginService.setUser(this.setUser)
-    console.log(this.setUser)
-      window.localStorage.setItem("username", this.setUser.uid);    
+    
+    // console.log(this.setUser)
+      // window.localStorage.setItem("username", this.setUser.uid);  
+      // this.databaseService.getCities()  
       alert("you have been successfully logged in")
       this.router.navigate(['/home']);
     }).catch((error)=>{

@@ -23,12 +23,16 @@ export class LoginService {
 
   setUser(data:User){
     this.currentUser = data
-    // console.log(this.currentUser)
+    console.log(this.currentUser)
+  }
+
+  returnUser(){
+    return this.currentUser
   }
 
   checkIfLoggedIn(){
     // console.log("check if loggedin"+ this.currentUser)
-    if(this.currentUser.UID) {
+    if(this.currentUser) {
       console.log("you have logged in")
        return true
     }

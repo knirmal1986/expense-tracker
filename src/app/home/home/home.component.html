@@ -6,19 +6,19 @@
             <div class="row">
                 <h3 class="card-title">User Info</h3>
             </div>
-            <div *ngIf="!loggedInUserDetails; else elseBlock" class="spinner-border text-info" role="status">
+            <div *ngIf="!setUser; else elseBlock" class="spinner-border text-info" role="status">
               <span class="visually-hidden">Loading...</span>
             </div>
             <ng-template #elseBlock>
             <div class="row text-center">
                 <i i-bs name="person-circle" width="2rem" 
                 height="2rem"></i>
-                <p class="card-text">{{loggedInUserDetails.firstName}}  {{loggedInUserDetails.lastName}}</p>
+                <p class="card-text">{{setUser.firstName}}  {{setUser.lastName}}</p>
             </div>
             <div class="row text-center">
                 <div class="col">
                   <p class="card-text">User Since</p>
-                  <p class="card-text">May 18,2024</p>
+                  <p class="card-text">{{setUser.crearedAt}}</p>
                   </div>
                   <div class="col">
                     <p class="card-text">Expenses logged</p>
@@ -26,7 +26,7 @@
                   </div>
                   <div class="col">
                     <p class="card-text">Last Login</p>
-                    <p class="card-text">May 22,2024</p>
+                    <p class="card-text">{{setUser.lastLogin|date: 'mediumDate'}}</p>
                   </div>
             </div>
           </ng-template>
@@ -45,30 +45,27 @@
           <div class="row">
             <p class="card-sub-title">Add / remove expense categories</p>
           </div>
-          <div class="row">
-            <p>Add/ Remove Category</p>
-          </div>
-          <div *ngIf="!loggedInUserDetails; else elseBlock1" class="spinner-border text-info" role="status">
+          <div *ngIf="!setUser; else elseBlock1" class="spinner-border text-info" role="status">
             <span class="visually-hidden">Loading...</span>
           </div>
           <ng-template #elseBlock1>
           <div class="row">
             <p class="card-title">
-              <span *ngFor="let category of loggedInUserDetails.categories let i = index">
-                <button type="button" class="btn btn-light">{{category}}</button>
+              <span *ngFor="let category of setUser.categories let i = index">
+                <button type="button" class="btn btn-light" (click)="selectCategory(category)">{{category}}</button>
               </span>
             </p>
           </div>
           </ng-template>
           <div class="row">
             <div class="input-group mb-3">
-              <input type="text" class="form-control" name="category" [(ngModel)]="category" placeholder="Category">
+              <input type="text" class="form-control" name="category"  [(ngModel)]="category" placeholder="Category">
             </div>
           </div>
           <div class="row text-end">
             <p>
               <button type="button" class="btn btn-outline-info" (click)="addNewCategory()">Add</button>
-              <button type="button" class="btn btn-outline-danger">Remove</button>
+              <button type="button" class="btn btn-outline-danger" (click)="removeCategory()">Remove</button>
             </p>
           </div>
         </div>
@@ -83,40 +80,48 @@
           <h3 class="card-title">Enter Expense </h3>
           <p class="card-text">Enter required fields to save a new expense </p>
         </div>
-        <form>
+        <form #expenseForm="ngForm">
           <div class="row">
             <div class="col"> 
-              <input type="text" class="form-control" placeholder="Expense name">
+              <input type="text" class="form-control" id="expenseName" name="expenseName" [(ngModel)] ="expense.name"  placeholder="Expense name" required>
             </div>
             <div class="col"> 
-              <input type="text" class="form-control" placeholder="Amount">
+              <input type="number" class="form-control" id="expenseAmount" name="expenseAmount" [(ngModel)] ="expense.amount" placeholder="Amount">
             </div>
           </div>
           <div class="row">
             <div class="col"> 
-              <input type="text" class="form-control" placeholder="Expense date">
+              <input type="date" class="form-control" id="expenseDate" name="expenseDate" [(ngModel)] ="expense.date" placeholder="Expense date">
             </div>
             <div class="col"> 
-              <input type="text" class="form-control" placeholder="Expense Category">
+              <select class="form-select" id="expenseCategory" name="expenseCategory" [(ngModel)] ="expense.category" aria-label="Default select example" required>
+                <option *ngFor="let category of setUser.categories let i = index" value={{category}}>{{category}}</option>
+              </select>
             </div>
           </div>
           <div class="row">
             <div class="col"> 
-              <input type="text" class="form-control" placeholder="Payment Type">
+              <select class="form-select" id="expensePaymentType" name="expensePaymentType" [(ngModel)] ="expense.paymentType" aria-label="Default select example" required>
+                <option selected>Credit card</option>
+                <option value="1">Debit card</option>
+                <option value="2">Cash</option>
+              </select>
             </div>
             <div class="col"></div>
           </div>
           <div class="row"> 
             <div class="col"> 
-              <input type="text" class="form-control" placeholder="Comments">
+              <input type="text" class="form-control" id="expenseComments" name="expenseComments" [(ngModel)] ="expense.comments" placeholder="Comments">
             </div>
           </div>
           <div class="row text-end">
             <p>
               <button type="button" class="btn btn-outline-info">Reset</button>
-              <button type="button" class="btn btn-outline-info">Save</button>
+              <button type="button" class="btn btn-outline-info" (click)="addExpense(expenseForm)">Save</button>
             </p>
+
           </div>
+
         </form>
       </div>
       
