@@ -19,6 +19,7 @@ export  interface User{
 export class LoginService {
   private currentUser: User ={} as any;
 
+
   constructor() { }
 
   setUser(data:User){
@@ -32,9 +33,12 @@ export class LoginService {
 
   checkIfLoggedIn(){
     // console.log("check if loggedin"+ this.currentUser)
-    if(this.currentUser) {
-      console.log("you have logged in")
-       return true
+    const UID = localStorage.getItem("username")
+    if(UID) {
+      // localStorage.setItem("username",this.currentUser.UID)
+      console.log("you have already logged in")
+      // console.log(localStorage.getItem("username"))
+      return true
     }
     else{
       console.log("Please login")

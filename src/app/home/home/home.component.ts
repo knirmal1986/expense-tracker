@@ -56,9 +56,20 @@ export class HomeComponent implements OnInit{
       alert("Please login")
       this.router.navigate(['/login'])
     }else{
-      this.setUser = this.dbService.getUserDetailsById("anything")
-      console.log(this.setUser)
+      // this.getUserDetails()
+      const UID = localStorage.getItem("username")
+      console.log(UID)
+      this.setUser = UID !== null ? this.dbService.getUserDetailsById(UID) : {}
     }
+  }
+
+ async getUserDetails(){
+    const UID:any = localStorage.getItem("username")
+      console.log(UID)
+      // this.setUser = UID !== null ? this.dbService.getUserDetailsById(UID) : {}
+
+      return this.dbService.getUserDetailsById(UID)
+
   }
 
   selectCategory(category:string){

@@ -2,9 +2,11 @@ import { Injectable,inject } from '@angular/core';
 import { Observable} from 'rxjs';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument,QueryDocumentSnapshot, QuerySnapshot,
   DocumentReference } from '@angular/fire/compat/firestore';
-import { collection,getFirestore,doc,setDoc} from 'firebase/firestore'
+import { collection,getFirestore,doc,setDoc, query, where, getDocs} from 'firebase/firestore'
 // import { Firestore, collection, collectionData } from '@angular/fire/firestore';
 import { map } from 'rxjs/operators';
+import { initializeApp } from 'firebase/app';
+import { codeSlash } from 'ngx-bootstrap-icons';
 
 
 @Injectable({
@@ -15,8 +17,18 @@ export class DatabaseService {
 
  private dbPath = '/users';
  private collectionName = "users"
+ setCurrentUser:any
  private cities:any
- afs:AngularFirestore
+ firebaseConfig = {
+  apiKey: "AIzaSyDvPFvPb2jeTOXqow6ToTGgdbfzR1wtYng",
+  authDomain: "expensetracker-9feec.firebaseapp.com",
+  projectId: "expensetracker-9feec",
+  storageBucket: "expensetracker-9feec.appspot.com",
+  messagingSenderId: "918664489535",
+  appId: "1:918664489535:web:c20b48f0faecbb45f1668a"
+};
+  fireBasedb = getFirestore(initializeApp(this.firebaseConfig))
+  afs:AngularFirestore
   usersRef :AngularFirestoreCollection<any>
   constructor( private db:AngularFirestore) { 
     this.usersRef=db.collection(this.dbPath)
@@ -31,25 +43,15 @@ export class DatabaseService {
       })
     }
 
-    getUserDetailsById(uid:string){
-      console.log("uid==", uid)
-        this.afs.collection(this.collectionName, ref => ref.where('UID', '==', uid))
-        .get().subscribe((res) =>{
-          console.log(res)
-        })
-       const setCurrentUser = {
-          "lastName":"like",
-          "emailID": "like@like.com",
-          "firstName":"like",
-          "categories": [
-                  "Groceries",
-                  "Transportation",
-                  "Entertainment",
-                  "Dining out",
-                  "Unassigned"
-              ],
-          "UID": "GbN4TvyrjfRdwGXCn38URDLBAoE2"
-          }
-          return setCurrentUser
+    async getUserDetailsById(uid:string){
+      //  let showloading:boolean = true
+       const q = query(collection(this.fireBasedb,'users'),where('UID', '==', uid))
+       const querySnapshot = await getDocs(q);
+       querySnapshot.forEach( (doc) => {
+          const user = (doc.id, "===>", doc.data())
+          this.setCurrentUser = user
+       })
+
+       return await this.setCurrentUser
     }
 }
