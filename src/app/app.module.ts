@@ -7,7 +7,7 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from '../core/header/header.component';
 import { FooterComponent } from '../core/footer/footer.component';
 import { ColorTheme, NgxBootstrapIconsModule, codeSlash, github, personCircle } from 'ngx-bootstrap-icons';
-import { alarm, alarmFill, alignBottom,list,linkedin } from 'ngx-bootstrap-icons';
+import { alarm, alarmFill, alignBottom,list,linkedin,calendarEvent,receipt,currencyRupee } from 'ngx-bootstrap-icons';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginModule } from './login/login.module';
 import { SignUpModule } from './sign-up/sign-up.module';
@@ -18,6 +18,7 @@ import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { getFirestore } from 'firebase/firestore';
 import { initializeApp } from 'firebase/app';
+import { AgChartsAngular } from 'ag-charts-angular';
 
 const firebaseConfig = {
   apiKey: "AIzaSyDvPFvPb2jeTOXqow6ToTGgdbfzR1wtYng",
@@ -38,14 +39,17 @@ const icons = {
   linkedin,
   github,
   codeSlash,
-  personCircle
+  personCircle,
+  calendarEvent,
+  receipt,
+  currencyRupee
 };
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
   ],
   imports: [
     BrowserModule,
@@ -64,7 +68,8 @@ const icons = {
   }),
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFirestoreModule,
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    AgChartsAngular
   ],
   providers: [],
   bootstrap: [AppComponent]

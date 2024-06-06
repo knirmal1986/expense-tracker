@@ -65,9 +65,6 @@ export class LoginComponent implements OnInit {
 
   signUpWithEmailAndPassword(userForm:NgForm){
     this.router.navigate(['/sign-up']);
-    // this.emailID  =userForm.value.email
-    // this.password = userForm.value.password
-    // this.authService.signUp(this.emailID,this.password)
   }
 
   async loginWithEmailAndPassword(userForm:NgForm){
@@ -75,12 +72,12 @@ export class LoginComponent implements OnInit {
     this.password = userForm.value.password
     this.authService.logIn(this.emailID,this.password).then(async (result: any) =>{
       const  {createdAt , lastLoginAt} = result.user.multiFactor.user.metadata
-      localStorage.setItem("username", result.user.multiFactor.user.uid);
-      // this.setUser =  await this.databaseService.getUserDetailsById(result.user.multiFactor.user.uid)
       this.setUser ={
+        username:result.user.multiFactor.user.uid,
         createdAt:createdAt,
         lastLoginAt:lastLoginAt
       } 
+      localStorage.setItem("username",result.user.multiFactor.user.uid,)
       console.log(this.setUser)
       this.loginService.setUser(this.setUser)
       this.router.navigate(['/home']);

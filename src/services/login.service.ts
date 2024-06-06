@@ -34,10 +34,9 @@ export class LoginService {
   checkIfLoggedIn(){
     // console.log("check if loggedin"+ this.currentUser)
     const UID = localStorage.getItem("username")
+    console.log(UID)
     if(UID) {
-      // localStorage.setItem("username",this.currentUser.UID)
       console.log("you have already logged in")
-      // console.log(localStorage.getItem("username"))
       return true
     }
     else{
@@ -48,5 +47,6 @@ export class LoginService {
 
   logOut(){
     this.currentUser = {} as any
+    localStorage.removeItem("username")
   }
 }
