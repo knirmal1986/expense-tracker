@@ -10,6 +10,8 @@ import { Router } from '@angular/router';
 export class AuthFirebaseService {
 username:string = "username"
 userDetails= {} as any
+
+
   constructor(private afAuth:AngularFireAuth,private router:Router) {}
 
   signInWithGoogle(){

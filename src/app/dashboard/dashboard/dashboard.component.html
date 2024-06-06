@@ -1,1 +1,94 @@
-<p>dashboard works!</p>
+<div class="container ">
+    <div class="row">
+        <div class="col">
+                <div class="card text-center">
+                    <p> 
+                        <i i-bs name="calendar-event" width="2rem" 
+                        height="2rem"></i>
+                    </p>
+                    <p *ngIf="userDetailsForUI.firstExpenseDate ==undefined else elseBlock" class="spinner-border text-info" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </p>
+                    <ng-template #elseBlock>
+                    <p> 
+                        <span><h2>{{userDetailsForUI.firstExpenseDate | date: 'mediumDate'}}</h2> </span>
+                    </p>
+                    </ng-template>
+                    <p>
+                        first expense date
+                    </p>
+                </div>
+        </div>
+        <div class="col">
+                <div class="card text-center">
+                    <p> 
+                        <i i-bs name="calendar-event" width="2rem" 
+                        height="2rem"></i>
+                    </p>
+                    <p *ngIf="!userDetailsForUI.lastExpenseDate else elseBlock1" class="spinner-border text-info" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </p>
+                    <ng-template #elseBlock1>
+                    <p> 
+                        <span><h2>{{userDetailsForUI.lastExpenseDate|date: 'mediumDate'}}</h2> </span>
+                    </p>
+                    </ng-template>
+                    <p>
+                        Last expense date
+                    </p>
+                </div>
+        </div>
+        <div class="col">
+                <div class="card text-center">
+                    <p> 
+                        <i i-bs name="receipt" width="2rem" 
+                        height="2rem"></i>
+                    </p>
+                    <p *ngIf="!userDetailsForUI.numberOfExpenses else elseBlock2" class="spinner-border text-info" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </p>
+                    <ng-template #elseBlock2>
+                    <p> 
+                        <span><h2>{{userDetailsForUI?.numberOfExpenses}}</h2> </span>
+                    </p>
+                    </ng-template>
+                    <p>
+                        Number of expenses
+                    </p>
+            </div>
+        </div>
+        <div class="col">
+                <div class="card text-center">
+                    <p> 
+                        <i i-bs name="currency-rupee" width="2rem" 
+                        height="2rem"></i>
+                    </p>
+                    <p *ngIf="!userDetailsForUI.numberOfExpenses else elseBlock3" class="spinner-border text-info" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </p>
+                    <ng-template #elseBlock3>
+                    <p> 
+                        <span><h2>{{this.userDetailsForUI?.totalExpense}}</h2> </span>
+                    </p>
+                    </ng-template>
+                    <p>
+                        Total expenses
+                    </p>
+                </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <p *ngIf="!pieChartData[0].name else elseBlock4" class="spinner-border text-info" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </p>
+            <ng-template #elseBlock4>
+            <app-category-summary-pie [data] = "pieChartData"></app-category-summary-pie>
+            </ng-template>
+        </div>
+        <div class="col-md-6">
+
+        </div>
+    </div>
+</div>              

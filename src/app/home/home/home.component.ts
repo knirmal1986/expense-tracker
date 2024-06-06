@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { database } from 'ngx-bootstrap-icons';
 import { Observable,expand,map } from 'rxjs';
@@ -6,7 +6,6 @@ import { AuthFirebaseService } from 'src/services/auth-firebase.service';
 import { DatabaseService } from 'src/services/database.service';
 import { LoginService } from 'src/services/login.service';
 import { NgForm } from '@angular/forms';
-import { NgFor } from '@angular/common';
 
 
 
@@ -26,7 +25,7 @@ export interface Expense{
   styleUrls: ['./home.component.css']
 })
 
-export class HomeComponent implements OnInit{
+export class HomeComponent implements OnInit,OnDestroy{
 
   expense:Expense ={
     name:"",
@@ -40,13 +39,12 @@ export class HomeComponent implements OnInit{
   loadingUserInformation:boolean= true
   loggedInUserDetails:any
   category:string =""
-  private authService:AuthFirebaseService
+
   private dbService:DatabaseService
   private loginService:LoginService
   private checkExpenseForm:boolean =  true
   setUser:any
   constructor(private router:Router){
-    this.authService = inject(AuthFirebaseService)
     this.dbService=inject(DatabaseService)
     this.loginService = inject(LoginService)
   }
@@ -56,9 +54,24 @@ export class HomeComponent implements OnInit{
       alert("Please login")
       this.router.navigate(['/login'])
     }else{
-      this.setUser = this.dbService.getUserDetailsById("anything")
-      console.log(this.setUser)
+      const UID = localStorage.getItem("username")
+      console.log(UID)
+       UID !== null ? this.dbService.getUserDetailsById(UID).then( (data) => {
+        console.log("user details =", data)
+        const details = this.loginService.returnUser()
+        this.setUser = data
+        this.setUser.details = details
+        console.log(this.setUser)
+      }) : {}
+      this.getUserUpdates();
     }
+  }
+
+  getUserUpdates(){
+    const UID = localStorage.getItem("username")
+      console.log(UID)
+      const data =  UID !== null ? this.dbService.onValueChanges(UID):{}
+      // this.setUser = data
   }
 
   selectCategory(category:string){
@@ -66,13 +79,13 @@ export class HomeComponent implements OnInit{
   }
 
   addNewCategory(){
-    this.setUser.categories.push(this.category)
-    console.log(this.setUser)
+    const UID = localStorage.getItem("username") || ""
+    this.dbService.addCategory(UID,this.category)
   }
 
   removeCategory(){
-    const index = this.setUser.categories.indexOf(this.category)
-    this.setUser.categories.splice(index,1)
+    const UID = localStorage.getItem("username") || ""
+    this.dbService.removeCategory(UID,this.category)
   }
 
   addExpense(expenseForm:NgForm){
@@ -95,9 +108,13 @@ export class HomeComponent implements OnInit{
         this.setUser.expenses = []
         this.setUser.expenses.push(newExpense)
       }
+      const UID = localStorage.getItem("username") || ""
+      this.dbService.addExpense(UID,newExpense)
       console.log(this.setUser)
-    }
-    
+    }    
   }
 
+  ngOnDestroy(): void{
+
+  }
 }

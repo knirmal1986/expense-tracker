@@ -13,20 +13,20 @@
             <div class="row text-center">
                 <i i-bs name="person-circle" width="2rem" 
                 height="2rem"></i>
-                <p class="card-text">{{setUser.firstName}}  {{setUser.lastName}}</p>
+                <p class="card-text">{{setUser?.firstName}}  {{setUser?.lastName}}</p>
             </div>
             <div class="row text-center">
                 <div class="col">
                   <p class="card-text">User Since</p>
-                  <p class="card-text">{{setUser.crearedAt}}</p>
+                  <p class="card-text">{{setUser?.details.createdAt | date: 'mediumDate'}}</p>
                   </div>
                   <div class="col">
                     <p class="card-text">Expenses logged</p>
-                    <p class="card-text">1</p>
+                    <p class="card-text">{{setUser?.expenses.length}}</p>
                   </div>
                   <div class="col">
                     <p class="card-text">Last Login</p>
-                    <p class="card-text">{{setUser.lastLogin|date: 'mediumDate'}}</p>
+                    <p class="card-text">{{setUser?.details.lastLoginAt|date: 'mediumDate'}}</p>
                   </div>
             </div>
           </ng-template>
@@ -51,7 +51,7 @@
           <ng-template #elseBlock1>
           <div class="row">
             <p class="card-title">
-              <span *ngFor="let category of setUser.categories let i = index">
+              <span *ngFor="let category of setUser?.categories; let i = index">
                 <button type="button" class="btn btn-light" (click)="selectCategory(category)">{{category}}</button>
               </span>
             </p>
@@ -95,7 +95,7 @@
             </div>
             <div class="col"> 
               <select class="form-select" id="expenseCategory" name="expenseCategory" [(ngModel)] ="expense.category" aria-label="Default select example" required>
-                <option *ngFor="let category of setUser.categories let i = index" value={{category}}>{{category}}</option>
+                <option *ngFor="let category of setUser?.categories; let i = index" value={{category}}>{{category}}</option>
               </select>
             </div>
           </div>
