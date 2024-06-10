@@ -8,12 +8,14 @@ import { AgChartsAngular } from 'ag-charts-angular';
 import { Chart, ChartModule } from 'angular-highcharts';
 import { HighchartsChartModule } from 'highcharts-angular';
 import { CategorySummaryPieComponent } from './dashboard/category-summary-pie/category-summary-pie.component';
+import { MonthlySummaryBarComponent } from './dashboard/monthly-summary-bar/monthly-summary-bar.component';
 
 
 @NgModule({
   declarations: [
     DashboardComponent,
-    CategorySummaryPieComponent
+    CategorySummaryPieComponent,
+    MonthlySummaryBarComponent
   ],
   imports: [
     CommonModule,
