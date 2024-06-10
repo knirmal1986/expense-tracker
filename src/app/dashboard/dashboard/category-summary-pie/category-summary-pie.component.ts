@@ -39,9 +39,7 @@ export class CategorySummaryPieComponent implements OnInit{
     },
   
     title: {
-      verticalAlign: 'middle',
-      floating: true,
-      text: 'Expenses',
+      text: 'Category Summary',
     },
   
     legend: {

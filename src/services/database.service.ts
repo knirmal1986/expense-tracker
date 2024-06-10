@@ -1,12 +1,10 @@
 import { Injectable,inject } from '@angular/core';
-import { Observable} from 'rxjs';
+import { Observable, Subject, of} from 'rxjs';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument,QueryDocumentSnapshot, QuerySnapshot,
   DocumentReference } from '@angular/fire/compat/firestore';
 import { collection,getFirestore,doc,setDoc, query, where, getDocs, updateDoc,onSnapshot} from 'firebase/firestore'
-// import { Firestore, collection, collectionData } from '@angular/fire/firestore';
 import { map } from 'rxjs/operators';
 import { initializeApp } from 'firebase/app';
-import { codeSlash } from 'ngx-bootstrap-icons';
 
 
 @Injectable({
@@ -29,6 +27,8 @@ export class DatabaseService {
   fireBasedb = getFirestore(initializeApp(this.firebaseConfig))
   afs:AngularFirestore
   usersRef :AngularFirestoreCollection<any>
+   private _userData$ = new Subject<any>();  
+  userData$ = this._userData$.asObservable()
   constructor( private db:AngularFirestore) { 
     this.usersRef=db.collection(this.dbPath)
     this.afs = inject(AngularFirestore)
@@ -109,7 +109,8 @@ export class DatabaseService {
       this.setCurrentUser.categories.push(category)
       const docRef = doc(this.fireBasedb, this.collectionName, id);
       setDoc(docRef,this.setCurrentUser).then((data) =>{
-        console.log("updated succesfully")
+        console.log(data)
+        this.onValueChanges(uid)
       })
     }
 
@@ -122,11 +123,18 @@ export class DatabaseService {
           id = doc.id
        })
       const index = this.setCurrentUser.categories.indexOf(category)
-      this.setCurrentUser.categories.splice(index,1)
-      const docRef = doc(this.fireBasedb, this.collectionName, id);
-      setDoc(docRef,this.setCurrentUser).then((data) =>{
-        console.log("Removed succesfully")
-      })
+      if(index ===-1){
+        console.log("this is not a category")
+      }
+      else{
+        this.setCurrentUser.categories.splice(index,1)
+        const docRef = doc(this.fireBasedb, this.collectionName, id);
+        setDoc(docRef,this.setCurrentUser).then((data) =>{
+          console.log("Removed succesfully")
+          this.onValueChanges(uid)
+        })
+      }
+
     }
 
     async addExpense(uid:string,expense:Object){
@@ -151,24 +159,23 @@ export class DatabaseService {
        })
     }
 
-    async onValueChanges(uid:string):Promise<any>{
+     onValueChanges(uid:string){
       let changedData:any
       const q = query(collection(this.fireBasedb, "users"), where("UID", "==", uid));
       const unsubscribe = onSnapshot(q, (snapshot) => {
-        snapshot.docChanges().forEach((change) => {
-          console.log(change)
+          snapshot.docChanges().forEach((change: any) => {
+          console.log("change==",change)
           if (change.type === "added" || change.type === "modified" || change.type === "removed" ) {
               console.log("User details changed ", change.doc.data());
               console.log(change.type)
               changedData = change.doc.data()
+              this.setUpdateUserData(changedData)
           }
         });
       });
-      return  new Promise( (resolve, reject) => {
-        resolve(changedData)
-        return changedData
-    })
   }
     
-
+  private setUpdateUserData( userData: any){
+    this._userData$.next(userData)
+  }
 }
